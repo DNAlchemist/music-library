@@ -1,0 +1,35 @@
+sourceSets {
+    integTest
+}
+
+task integTest(type: Test) {
+    description = "Runs integration tests."
+    testClassesDirs = sourceSets.integTest.output.classesDirs
+    classpath = sourceSets.integTest.runtimeClasspath
+    maxHeapSize = '1024m'
+    mustRunAfter test
+}
+
+dependencies {
+    integTestCompile sourceSets.main.output
+    integTestCompile sourceSets.test.output
+    integTestCompile configurations.compile
+    integTestCompile configurations.testCompile
+    integTestRuntime configurations.runtime
+    integTestRuntime configurations.testRuntime
+}
+
+gradle.projectsEvaluated {
+    gradle.rootProject.allprojects(configureTasksToRunAfter('integTest', 'test'))
+}
+
+check.dependsOn integTest
+
+static configureTasksToRunAfter(String taskName, String runAfterTaskName) {
+    return { project ->
+        Task task = project[taskName] as Task
+        project.tasks
+                .findAll({ it.name == runAfterTaskName })
+                .each({ runAfterTask -> task.mustRunAfter(runAfterTask) })
+    }
+}

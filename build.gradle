@@ -1,0 +1,31 @@
+group = 'one.chest'
+version = '0.0.1-SNAPSHOT'
+
+apply plugin: 'groovy'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.10.0'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.1'
+    }
+}
+
+apply from: 'coverage.gradle'
+apply from: 'integTest.gradle'
+apply from: 'license.gradle'
+apply from: 'publication.gradle'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.mashape.unirest:unirest-java:1.4.9'
+
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.7'
+    testCompile 'junit:junit:4.12'
+}
