@@ -30,12 +30,12 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class MusicLibraryImpl implements MusicLibrary {
+public final class MusicGuesserImpl implements MusicGuesser {
 
     private final String host;
     private final JSResponseHandler jsResponseHandler = new JSResponseHandler();
 
-    MusicLibraryImpl(String libraryHost) {
+    MusicGuesserImpl(String libraryHost) {
         this.host = libraryHost;
     }
 
@@ -48,7 +48,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
             return jsResponseHandler.parseSuggestionToList(js.getBody())
                     .stream()
                     .filter(s -> s.length() > 1)
-                    .map(MusicLibraryImpl::formatSong)
+                    .map(MusicGuesserImpl::formatSong)
                     .collect(Collectors.toList());
 
         } catch (UnirestException e) {

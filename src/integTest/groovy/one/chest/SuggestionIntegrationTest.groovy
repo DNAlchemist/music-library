@@ -31,7 +31,7 @@ class SuggestionIntegrationTest {
 
     @Test
     void testSuggestStartsWith() {
-        MusicLibrary lib = new MusicLibraryImpl('https://suggest-music.yandex.ru')
+        MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
         def searchResult = lib.suggest("Robert Johnson")
         assert searchResult.sort() == [
                 'Robert johnson',
@@ -49,7 +49,7 @@ class SuggestionIntegrationTest {
 
     @Test
     void testGuess() {
-        MusicLibrary lib = new MusicLibraryImpl('https://suggest-music.yandex.ru')
+        MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
         def searchResult = lib.suggest("REM its the")
         assert searchResult == ['R.e.m. - its the end of the world as we know it and i feel fine']
     }

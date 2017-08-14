@@ -21,12 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest
 
-import java.util.List;
+import org.junit.Test;
 
-public interface MusicLibrary {
+class MusicGuesserImplTest {
 
-    List<String> suggest(String part);
+    @Test
+    void formatSong() {
+        def result = MusicGuesserImpl.formatSong("robert johnson - come on in my kitchen");
+        assert result == "Robert johnson - come on in my kitchen"
+    }
+
+    @Test
+    void formatSongShort() {
+        def result = MusicGuesserImpl.formatSong("we");
+        assert result == "We"
+    }
+
+    @Test
+    void formatSongOneSymbol() {
+        def result = MusicGuesserImpl.formatSong("w");
+        assert result == "W"
+    }
 
 }
