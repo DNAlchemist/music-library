@@ -52,7 +52,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     .collect(Collectors.toList());
 
         } catch (UnirestException e) {
-            throw new MusicLibraryInternalException("Suggestion exception", e);
+            throw new MusicLibraryInternalException("Error while suggest track", e);
         }
     }
 
