@@ -74,4 +74,25 @@ public class JSResponseHandlerTest {
 
         assert jsHandler.parseSuggestionToList(js) == []
     }
+
+    @Test(expected = MusicLibraryInternalException)
+    public void illegalArgumentListSize() {
+        def jsHandler = new JSResponseHandler()
+
+        @Language('js')
+        String js = 'suggest.apply(["impossible value", [], []])'
+
+        jsHandler.parseSuggestionToList(js)
+    }
+
+    @Test(expected = MusicLibraryInternalException)
+    public void missingSuggestionArgument() {
+        def jsHandler = new JSResponseHandler()
+
+        @Language('js')
+        String js = 'suggest.apply(["impossible value"], [])'
+
+        jsHandler.parseSuggestionToList(js)
+    }
+    
 }

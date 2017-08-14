@@ -54,7 +54,7 @@ class JSResponseHandler {
                     .map(String::valueOf)
                     .collect(Collectors.toList());
 
-        } catch (ScriptException e) {
+        } catch (ScriptException | ClassCastException e) {
             throw new MusicLibraryInternalException("Can't handle js: " + js, e);
         }
     }
