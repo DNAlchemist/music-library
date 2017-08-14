@@ -23,28 +23,26 @@
  */
 package one.chest
 
-import groovy.transform.CompileStatic
-import org.junit.Test
+import org.junit.Test;
 
-@CompileStatic
-class MusicLibraryIntegrationTest {
+class MusicLibraryImplTest {
 
     @Test
-    void testSuggestStartsWith() {
-        MusicLibrary lib = new MusicLibraryImpl('https://suggest-music.yandex.ru')
-        def searchResult = lib.suggest("Robert Johnson")
-        assert searchResult.sort() == [
-                'Robert johnson',
-                'Robert johnson - come on in my kitchen',
-                'Robert johnson - cross road blues',
-                'Robert johnson - crossroad blues',
-                'Robert johnson - from four until late',
-                'Robert johnson - little queen of spades',
-                'Robert johnson - love in vain',
-                'Robert johnson - me and the devil blues',
-                'Robert johnson - sweet home chicago',
-                'Robert johnson - the complete recordings'
-        ]
+    void formatSong() {
+        def result = MusicLibraryImpl.formatSong("robert johnson - come on in my kitchen");
+        assert result == "Robert johnson - come on in my kitchen"
+    }
+
+    @Test
+    void formatSongShort() {
+        def result = MusicLibraryImpl.formatSong("we");
+        assert result == "We"
+    }
+
+    @Test
+    void formatSongOneSymbol() {
+        def result = MusicLibraryImpl.formatSong("w");
+        assert result == "W"
     }
 
 }

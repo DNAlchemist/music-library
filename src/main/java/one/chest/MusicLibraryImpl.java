@@ -23,11 +23,17 @@
  */
 package one.chest;
 
-import java.util.List;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class MusicLibraryImpl implements MusicLibrary {
+import java.util.List;
+import java.util.stream.Collectors;
+
+public final class MusicLibraryImpl implements MusicLibrary {
 
     private final String host;
+    private final JSResponseHandler jsResponseHandler = new JSResponseHandler();
 
     MusicLibraryImpl(String libraryHost) {
         this.host = libraryHost;
@@ -35,7 +41,23 @@ public class MusicLibraryImpl implements MusicLibrary {
 
     @Override
     public List<String> suggest(String part) {
-        throw new UnsupportedOperationException("search");
+        try {
+            HttpResponse<String> js = Unirest.get(host.concat("/suggest-ya.cgi"))
+                    .queryString("part", part)
+                    .asString();
+            return jsResponseHandler.parseSuggestionToList(js.getBody())
+                    .stream()
+                    .filter(s -> s.length() > 1)
+                    .map(MusicLibraryImpl::formatSong)
+                    .collect(Collectors.toList());
+
+        } catch (UnirestException e) {
+            throw new MusicLibraryInternalException("Suggestion exception", e);
+        }
+    }
+
+    static String formatSong(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
 }
