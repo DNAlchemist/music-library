@@ -27,7 +27,7 @@ import groovy.transform.CompileStatic
 import org.junit.Test
 
 @CompileStatic
-class MusicLibraryIntegrationTest {
+class SuggestionIntegrationTest {
 
     @Test
     void testSuggestStartsWith() {
