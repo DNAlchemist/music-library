@@ -23,8 +23,8 @@
  */
 package one.chest
 
-import org.intellij.lang.annotations.Language;
-import org.junit.Test;
+import org.intellij.lang.annotations.Language
+import org.junit.Test
 
 public class JSResponseHandlerTest {
 
@@ -94,5 +94,5 @@ public class JSResponseHandlerTest {
 
         jsHandler.parseSuggestionToList(js)
     }
-    
+
 }

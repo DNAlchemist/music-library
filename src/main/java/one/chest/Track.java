@@ -40,7 +40,7 @@ public class Track {
     }
 
     public static Track fromJson(String artist, JSONObject i) {
-        int albumId = ((JSONObject)i.getJSONArray("albums").get(0)).getInt("id");
+        int albumId = ((JSONObject) i.getJSONArray("albums").get(0)).getInt("id");
         int trackId = i.getInt("id");
         TrackLocation trackLocation = new TrackLocation(albumId, trackId);
         return new Track(trackLocation, artist, i.getString("title"));

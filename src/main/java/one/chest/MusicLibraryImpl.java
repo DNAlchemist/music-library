@@ -44,13 +44,13 @@ public final class MusicLibraryImpl implements MusicLibrary {
     @Override
     public List<Track> searchTracks(String artist, String song) {
         try {
-            HttpResponse<JsonNode> js = Unirest.get(host.concat("/handlers/music-search.jsx"))
+            HttpResponse<JsonNode> response = Unirest.get(host.concat("/handlers/music-search.jsx"))
                     .queryString("text", artist + " " + song)
                     .queryString("type", "track")
                     .header("Accept-Language", "ru")
                     .header("Cookie", UUID.randomUUID().toString())
                     .asJson();
-            JSONObject tracks = js.getBody().getObject().getJSONObject("tracks");
+            JSONObject tracks = response.getBody().getObject().getJSONObject("tracks");
             return new TrackExtractor(artist).fromJSON(tracks);
         } catch (UnirestException e) {
             throw new MusicLibraryInternalException("Error while search track", e);

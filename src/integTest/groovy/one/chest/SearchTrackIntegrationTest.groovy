@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest
 
-import org.junit.Test;
+import org.junit.Test
 
 public class SearchTrackIntegrationTest {
 

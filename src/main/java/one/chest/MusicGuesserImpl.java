@@ -39,6 +39,10 @@ public final class MusicGuesserImpl implements MusicGuesser {
         this.host = libraryHost;
     }
 
+    static String formatSong(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+
     @Override
     public List<String> suggest(String part) {
         try {
@@ -54,10 +58,6 @@ public final class MusicGuesserImpl implements MusicGuesser {
         } catch (UnirestException e) {
             throw new MusicLibraryInternalException("Error while suggest track", e);
         }
-    }
-
-    static String formatSong(String s) {
-        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
 
 }
