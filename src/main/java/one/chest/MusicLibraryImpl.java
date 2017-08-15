@@ -47,8 +47,10 @@ public final class MusicLibraryImpl implements MusicLibrary {
             HttpResponse<JsonNode> response = Unirest.get(host.concat("/handlers/music-search.jsx"))
                     .queryString("text", artist + " " + song)
                     .queryString("type", "track")
+                    .queryString("nocookiesupport", "true")
                     .header("Accept-Language", "ru")
                     .header("Cookie", UUID.randomUUID().toString())
+                    .header("X-Retpath-Y", "https://music.yandex.ru/")
                     .asJson();
             JSONObject tracks = response.getBody().getObject().getJSONObject("tracks");
             return new TrackExtractor(artist).fromJSON(tracks);
