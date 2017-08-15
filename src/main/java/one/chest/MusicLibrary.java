@@ -23,10 +23,13 @@
  */
 package one.chest;
 
+import java.io.InputStream;
 import java.util.List;
 
 public interface MusicLibrary {
 
     List<Track> searchTracks(String artist, String song);
+
+    InputStream fetchInputStream(TrackLocation trackLocation);
 
 }

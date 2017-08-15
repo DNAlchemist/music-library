@@ -30,8 +30,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import org.json.JSONObject;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,9 +38,12 @@ import java.util.UUID;
 public final class MusicLibraryImpl implements MusicLibrary {
 
     private final String host;
+    private final TrackLocationFetcher trackLocationFetcher;
+    private final String uuid = UUID.randomUUID().toString();
 
     MusicLibraryImpl(String libraryHost) {
         this.host = libraryHost;
+        this.trackLocationFetcher = new TrackLocationFetcher();
     }
 
     @Override
@@ -52,7 +54,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     .queryString("type", "track")
                     .queryString("nocookiesupport", "true")
                     .header("Accept-Language", "ru")
-                    .header("Cookie", UUID.randomUUID().toString())
+                    .header("Cookie", "uuid=" + uuid)
                     .header("X-Retpath-Y", "https://music.yandex.ru/")
                     .asJson();
             JSONObject tracks = response.getBody().getObject().getJSONObject("tracks");
@@ -62,20 +64,41 @@ public final class MusicLibraryImpl implements MusicLibrary {
         }
     }
 
-    public URI getTrackURI(TrackLocation trackLocation) {
+    @Override
+    public InputStream fetchInputStream(TrackLocation trackLocation) {
         try {
             GetRequest request = Unirest.get(host.concat("/api/v2.1/handlers/track/{trackId}:{albumId}/web-feed-promotion-playlist-saved/download/m?hq=0"))
                     .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
                     .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
-                    .header("Cookie", UUID.randomUUID().toString())
+                    .header("Cookie", "uuid=" + uuid)
                     .header("X-Retpath-Y", "https://music.yandex.ru/");
 
             HttpResponse<JsonNode> response = request.asJson();
             if (response.getStatus() == 403) {
                 throw new InvalidTrackLocationException("Invalid location: " + request.getUrl());
             }
-            return new URI(response.getBody().getObject().getString("src"));
-        } catch (UnirestException | URISyntaxException e) {
+
+            String locationHolderURL = response.getBody().getObject().getString("src");
+            JSONObject json = Unirest.get(locationHolderURL)
+                    .queryString("format", "json")
+                    .asJson()
+                    .getBody()
+                    .getObject();
+
+            String location = trackLocationFetcher.createTrackURI(
+                    trackLocation.getTrackId(),
+                    json.getString("host"),
+                    json.getString("path"),
+                    json.getString("ts"),
+                    json.getString("s"));
+
+            return Unirest.get(location)
+                    .header("Cookie", UUID.randomUUID().toString())
+                    .header("X-Retpath-Y", "https://music.yandex.ru/")
+                    .asBinary()
+                    .getBody();
+
+        } catch (UnirestException e) {
             throw new MusicLibraryInternalException("Error while building track download URI", e);
         }
     }

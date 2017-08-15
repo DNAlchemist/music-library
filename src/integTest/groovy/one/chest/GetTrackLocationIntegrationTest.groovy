@@ -23,23 +23,18 @@
  */
 package one.chest
 
+import org.apache.tika.Tika
 import org.junit.Test
 
 public class GetTrackLocationIntegrationTest {
 
     @Test
-    void getTrackLocation() {
+    void getDownloadTrackFromLocation() {
         def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
         def trackLocation = new TrackLocation(4766, 57703)
-        def uri = musicLibrary.getTrackURI(trackLocation)
-        assert uri && uri.toString().startsWith("https://storage.mds.yandex.net/file-download-info/53090_49160231.49166739.1.57703/2?sign=")
-    }
 
-    @Test(expected = InvalidTrackLocationException)
-    void getTrackInvalidLocation() {
-        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
-        def trackLocation = new TrackLocation(57703, 4766)
-        musicLibrary.getTrackURI(trackLocation)
+        musicLibrary.fetchInputStream(trackLocation).withCloseable {
+            assert new Tika().detect(it) == "audio/mpeg"
+        }
     }
-
 }

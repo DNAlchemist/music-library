@@ -27,6 +27,8 @@ dependencies {
     compile 'com.mashape.unirest:unirest-java:1.4.9'
 
     testCompile 'com.intellij:annotations:12.0'
+    testCompile 'org.apache.tika:tika-core:1.16'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.7'
     testCompile 'junit:junit:4.12'
+
 }
