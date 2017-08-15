@@ -1,0 +1,187 @@
+{
+  "total": 4,
+  "perPage": 20,
+  "items": [
+    {
+      "explicit": false,
+      "albums": [
+        {
+          "trackCount": 12,
+          "trackPosition": {
+            "volume": 1,
+            "index": 1
+          },
+          "year": 2009,
+          "artists": [],
+          "genre": "rock",
+          "available": true,
+          "originalReleaseYear": 2009,
+          "id": 70149,
+          "storageDir": "63648bc6.a.70149",
+          "title": "West Ryder Pauper Lunatic Asylum",
+          "coverUri": "avatars.yandex.net/get-music-content/28589/63648bc6.a.70149-2/%%"
+        }
+      ],
+      "regions": [
+        "RUSSIA",
+        "RUSSIA_PREMIUM"
+      ],
+      "availableAsRbt": false,
+      "artists": [
+        {
+          "cover": {
+            "prefix": "18d9b371.p.29692/",
+            "type": "from-artist-photos",
+            "uri": "avatars.yandex.net/get-music-content/63210/18d9b371.p.29692/%%"
+          },
+          "decomposed": [],
+          "composer": false,
+          "various": false,
+          "name": "Kasabian",
+          "id": 29692
+        }
+      ],
+      "available": true,
+      "id": 651152,
+      "storageDir": "95756_e476715b.38523483.651152",
+      "title": "Underdog",
+      "durationMs": 277520,
+      "version": "Album Version"
+    },
+    {
+      "explicit": false,
+      "albums": [
+        {
+          "trackCount": 6,
+          "trackPosition": {
+            "volume": 1,
+            "index": 5
+          },
+          "year": 2013,
+          "artists": [],
+          "available": true,
+          "originalReleaseYear": 2013,
+          "id": 1178281,
+          "storageDir": "b436a556.a.1178281",
+          "title": "Karaoke Hits Kasabian",
+          "coverUri": "avatars.yandex.net/get-music-content/38044/b436a556.a.1178281-1/%%"
+        }
+      ],
+      "regions": [
+        "RUSSIA",
+        "RUSSIA_PREMIUM"
+      ],
+      "availableAsRbt": false,
+      "artists": [
+        {
+          "cover": {
+            "prefix": "5b7f7d9a.a.634797-1",
+            "type": "from-album-cover",
+            "uri": "avatars.yandex.net/get-music-content/34131/5b7f7d9a.a.634797-1/%%"
+          },
+          "decomposed": [],
+          "composer": false,
+          "various": true,
+          "name": "A-Type Player",
+          "id": 1556392
+        }
+      ],
+      "available": true,
+      "id": 10850068,
+      "storageDir": "135140_1151cc7a.14299148.1.10850068",
+      "title": "Underdog",
+      "durationMs": 279770,
+      "version": "Originally Performed By Kasabian; Karaoke Version With Background Vocals"
+    },
+    {
+      "explicit": false,
+      "albums": [
+        {
+          "trackCount": 50,
+          "trackPosition": {
+            "volume": 1,
+            "index": 15
+          },
+          "year": 2009,
+          "artists": [],
+          "genre": "rock",
+          "available": true,
+          "originalReleaseYear": 2009,
+          "id": 340734,
+          "storageDir": "fa92a59a.a.340734",
+          "title": "Top 50 Workout Hits Vol. 2",
+          "coverUri": "avatars.yandex.net/get-music-content/33216/fa92a59a.a.340734-1/%%"
+        }
+      ],
+      "regions": [
+        "RUSSIA",
+        "RUSSIA_PREMIUM"
+      ],
+      "availableAsRbt": false,
+      "artists": [
+        {
+          "cover": {
+            "prefix": "31f5d624.a.2941854-1",
+            "type": "from-album-cover",
+            "uri": "avatars.yandex.net/get-music-content/49707/31f5d624.a.2941854-1/%%"
+          },
+          "decomposed": [],
+          "composer": false,
+          "various": false,
+          "name": "Cardio Workout Crew",
+          "id": 408951
+        }
+      ],
+      "available": true,
+      "id": 3215281,
+      "storageDir": "120713_74c085e2.4316798.1.3215281",
+      "title": "Underdog (as made famous by Kasabian)",
+      "durationMs": 278730
+    },
+    {
+      "explicit": false,
+      "albums": [
+        {
+          "trackCount": 120,
+          "trackPosition": {
+            "volume": 2,
+            "index": 27
+          },
+          "year": 2009,
+          "artists": [],
+          "genre": "pop",
+          "available": true,
+          "originalReleaseYear": 2009,
+          "id": 351388,
+          "storageDir": "1d120dc1.a.351388",
+          "title": "Today's Best Karaoke",
+          "coverUri": "avatars.yandex.net/get-music-content/42108/1d120dc1.a.351388-1/%%"
+        }
+      ],
+      "regions": [
+        "RUSSIA",
+        "RUSSIA_PREMIUM"
+      ],
+      "availableAsRbt": false,
+      "artists": [
+        {
+          "cover": {
+            "prefix": "1d120dc1.a.351388-1",
+            "type": "from-album-cover",
+            "uri": "avatars.yandex.net/get-music-content/42108/1d120dc1.a.351388-1/%%"
+          },
+          "decomposed": [],
+          "composer": false,
+          "various": false,
+          "name": "Pop Karaoke Players",
+          "id": 627108
+        }
+      ],
+      "available": true,
+      "id": 3334778,
+      "storageDir": "764552_5f5a4fd3.4458712.1.3334778",
+      "title": "Underdog (as made famous by Kasabian)",
+      "durationMs": 278730
+    }
+  ]
+}
