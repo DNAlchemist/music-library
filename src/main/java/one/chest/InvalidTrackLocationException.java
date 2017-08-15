@@ -23,35 +23,10 @@
  */
 package one.chest;
 
-public class TrackLocation {
+public class InvalidTrackLocationException extends RuntimeException {
 
-    private final int albumId;
-    private final int trackId;
-
-    public TrackLocation(int albumId, int trackId) {
-        this.albumId = albumId;
-        this.trackId = trackId;
+    public InvalidTrackLocationException(String message) {
+        super(message);
     }
 
-    public int getAlbumId() {
-        return albumId;
-    }
-
-    public int getTrackId() {
-        return trackId;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof TrackLocation)) {
-            return false;
-        }
-        TrackLocation other = (TrackLocation) obj;
-        return albumId == other.albumId && trackId == other.trackId;
-    }
-
-    @Override
-    public String toString() {
-        return albumId + ":" + trackId;
-    }
 }

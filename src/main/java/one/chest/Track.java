@@ -46,6 +46,10 @@ public class Track {
         return new Track(trackLocation, artist, i.getString("title"));
     }
 
+    public TrackLocation getTrackLocation() {
+        return trackLocation;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Track)) {

@@ -27,8 +27,11 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.GetRequest;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,6 +59,24 @@ public final class MusicLibraryImpl implements MusicLibrary {
             return new TrackExtractor(artist).fromJSON(tracks);
         } catch (UnirestException e) {
             throw new MusicLibraryInternalException("Error while search track", e);
+        }
+    }
+
+    public URI getTrackURI(TrackLocation trackLocation) {
+        try {
+            GetRequest request = Unirest.get(host.concat("/api/v2.1/handlers/track/{trackId}:{albumId}/web-feed-promotion-playlist-saved/download/m?hq=0"))
+                    .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
+                    .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
+                    .header("Cookie", UUID.randomUUID().toString())
+                    .header("X-Retpath-Y", "https://music.yandex.ru/");
+
+            HttpResponse<JsonNode> response = request.asJson();
+            if (response.getStatus() == 403) {
+                throw new InvalidTrackLocationException("Invalid location: " + request.getUrl());
+            }
+            return new URI(response.getBody().getObject().getString("src"));
+        } catch (UnirestException | URISyntaxException e) {
+            throw new MusicLibraryInternalException("Error while building track download URI", e);
         }
     }
 

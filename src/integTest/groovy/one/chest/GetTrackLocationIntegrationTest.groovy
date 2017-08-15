@@ -21,37 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest
 
-public class TrackLocation {
+import org.junit.Test
 
-    private final int albumId;
-    private final int trackId;
+public class GetTrackLocationIntegrationTest {
 
-    public TrackLocation(int albumId, int trackId) {
-        this.albumId = albumId;
-        this.trackId = trackId;
+    @Test
+    void getTrackLocation() {
+        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
+        def trackLocation = new TrackLocation(4766, 57703)
+        def uri = musicLibrary.getTrackURI(trackLocation)
+        assert uri && uri.toString().startsWith("https://storage.mds.yandex.net/file-download-info/53090_49160231.49166739.1.57703/2?sign=")
     }
 
-    public int getAlbumId() {
-        return albumId;
+    @Test(expected = InvalidTrackLocationException)
+    void getTrackInvalidLocation() {
+        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
+        def trackLocation = new TrackLocation(57703, 4766)
+        musicLibrary.getTrackURI(trackLocation)
     }
 
-    public int getTrackId() {
-        return trackId;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof TrackLocation)) {
-            return false;
-        }
-        TrackLocation other = (TrackLocation) obj;
-        return albumId == other.albumId && trackId == other.trackId;
-    }
-
-    @Override
-    public String toString() {
-        return albumId + ":" + trackId;
-    }
 }
