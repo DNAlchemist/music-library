@@ -23,6 +23,8 @@
  */
 package one.chest.musiclibrary;
 
+import one.chest.musiclibrary.exception.MusicLibraryInternalException;
+
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

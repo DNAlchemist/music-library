@@ -26,6 +26,7 @@ package one.chest.musiclibrary;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import one.chest.musiclibrary.exception.MusicLibraryInternalException;
 
 import java.util.List;
 import java.util.stream.Collectors;
