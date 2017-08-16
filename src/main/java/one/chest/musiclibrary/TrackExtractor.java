@@ -21,12 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest.musiclibrary;
+
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
-public interface MusicGuesser {
+final class TrackExtractor {
 
-    List<String> suggest(String part);
+    private final String artist;
 
+    TrackExtractor(String artist) {
+        this.artist = artist;
+    }
+
+    List<Track> fromJSON(JSONObject tracks) {
+        JSONArray items = tracks.getJSONArray("items");
+        return StreamSupport.stream(items.spliterator(), false)
+                .map(o -> (JSONObject) o)
+                .filter(this::filterByArtistName)
+                .filter(i -> i.getJSONArray("albums").length() > 0)
+                .map(i -> Track.fromJson(artist, i))
+                .collect(Collectors.toList());
+    }
+
+    boolean filterByArtistName(JSONObject jsonObject) {
+        JSONArray artists = jsonObject.getJSONArray("artists");
+        return StreamSupport.stream(artists.spliterator(), false)
+                .anyMatch(a -> artist.equals(((JSONObject) a).getString("name")));
+    }
 }

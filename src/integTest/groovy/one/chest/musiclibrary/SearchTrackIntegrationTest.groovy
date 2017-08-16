@@ -21,37 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest
+package one.chest.musiclibrary
 
-import groovy.transform.CompileStatic
 import org.junit.Test
 
-@CompileStatic
-class SuggestionIntegrationTest {
+public class SearchTrackIntegrationTest {
 
     @Test
-    void testSuggestStartsWith() {
-        MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
-        def searchResult = lib.suggest("Robert Johnson")
-        assert searchResult.sort() == [
-                'Robert johnson',
-                'Robert johnson - come on in my kitchen',
-                'Robert johnson - cross road blues',
-                'Robert johnson - crossroad blues',
-                'Robert johnson - from four until late',
-                'Robert johnson - little queen of spades',
-                'Robert johnson - love in vain',
-                'Robert johnson - me and the devil blues',
-                'Robert johnson - sweet home chicago',
-                'Robert johnson - the complete recordings'
+    void searchTrack() {
+        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
+        List<Track> trackList = musicLibrary.searchTracks("Ozzy Osbourne", "Crazy Train")
+        assert trackList == [
+                new Track(new TrackLocation(67172, 628177), "Ozzy Osbourne", "Crazy Train"),
+                new Track(new TrackLocation(1805031, 16491927), "Ozzy Osbourne", "Crazy Train")
         ]
-    }
-
-    @Test
-    void testGuess() {
-        MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
-        def searchResult = lib.suggest("REM its the")
-        assert searchResult == ['R.e.m. - its the end of the world as we know it and i feel fine']
     }
 
 }

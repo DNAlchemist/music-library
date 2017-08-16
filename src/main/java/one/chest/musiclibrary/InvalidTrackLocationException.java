@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest.musiclibrary;
 
-public class MusicLibraryInternalException extends RuntimeException {
+public class InvalidTrackLocationException extends RuntimeException {
 
-    public MusicLibraryInternalException(String message, Throwable cause) {
-        super(message, cause);
+    public InvalidTrackLocationException(String message) {
+        super(message);
     }
 
 }

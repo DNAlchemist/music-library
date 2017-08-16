@@ -21,20 +21,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest
+package one.chest.musiclibrary
 
+import groovy.json.JsonSlurper
+import org.json.JSONObject
 import org.junit.Test
 
-public class SearchTrackIntegrationTest {
+public class TrackExtractorTest {
 
     @Test
-    void searchTrack() {
-        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
-        List<Track> trackList = musicLibrary.searchTracks("Ozzy Osbourne", "Crazy Train")
-        assert trackList == [
-                new Track(new TrackLocation(67172, 628177), "Ozzy Osbourne", "Crazy Train"),
-                new Track(new TrackLocation(1805031, 16491927), "Ozzy Osbourne", "Crazy Train")
-        ]
+    public void fromJSON() {
+        def trackExtractor = new TrackExtractor("Kasabian")
+        def track = new JsonSlurper().parseText(getClass().classLoader.getResource("track.json").text) as JSONObject
+        assert trackExtractor.filterByArtistName(track)
     }
 
+    @Test
+    public void fromJSONInvalidArtist() {
+        def trackExtractor = new TrackExtractor("Queen of the stone age")
+        def track = new JsonSlurper().parseText(getClass().classLoader.getResource("track.json").text) as JSONObject
+        assert !trackExtractor.filterByArtistName(track)
+    }
+
+    @Test
+    public void filterByArtistName() {
+        def trackExtractor = new TrackExtractor("Kasabian")
+        def tracks = new JsonSlurper().parseText(getClass().classLoader.getResource("tracks.json").text) as JSONObject
+        assert trackExtractor.fromJSON(tracks) == [
+                new Track(new TrackLocation(70149, 651152), "Kasabian", "Underdog")
+        ]
+    }
 }

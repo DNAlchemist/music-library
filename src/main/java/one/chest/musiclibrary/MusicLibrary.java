@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest.musiclibrary;
 
 import java.io.InputStream;
 import java.util.List;

@@ -21,34 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest
+package one.chest.musiclibrary
 
-import groovy.json.JsonSlurper
-import org.json.JSONObject
+import groovy.transform.CompileStatic
 import org.junit.Test
 
-public class TrackExtractorTest {
+@CompileStatic
+class SuggestionIntegrationTest {
 
     @Test
-    public void fromJSON() {
-        def trackExtractor = new TrackExtractor("Kasabian")
-        def track = new JsonSlurper().parseText(getClass().classLoader.getResource("track.json").text) as JSONObject
-        assert trackExtractor.filterByArtistName(track)
-    }
-
-    @Test
-    public void fromJSONInvalidArtist() {
-        def trackExtractor = new TrackExtractor("Queen of the stone age")
-        def track = new JsonSlurper().parseText(getClass().classLoader.getResource("track.json").text) as JSONObject
-        assert !trackExtractor.filterByArtistName(track)
-    }
-
-    @Test
-    public void filterByArtistName() {
-        def trackExtractor = new TrackExtractor("Kasabian")
-        def tracks = new JsonSlurper().parseText(getClass().classLoader.getResource("tracks.json").text) as JSONObject
-        assert trackExtractor.fromJSON(tracks) == [
-                new Track(new TrackLocation(70149, 651152), "Kasabian", "Underdog")
+    void testSuggestStartsWith() {
+        MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
+        def searchResult = lib.suggest("Robert Johnson")
+        assert searchResult.sort() == [
+                'Robert johnson',
+                'Robert johnson - come on in my kitchen',
+                'Robert johnson - cross road blues',
+                'Robert johnson - crossroad blues',
+                'Robert johnson - from four until late',
+                'Robert johnson - little queen of spades',
+                'Robert johnson - love in vain',
+                'Robert johnson - me and the devil blues',
+                'Robert johnson - sweet home chicago',
+                'Robert johnson - the complete recordings'
         ]
     }
+
+    @Test
+    void testGuess() {
+        MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
+        def searchResult = lib.suggest("REM its the")
+        assert searchResult == ['R.e.m. - its the end of the world as we know it and i feel fine']
+    }
+
 }

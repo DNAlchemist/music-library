@@ -21,37 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest.musiclibrary
 
-public class TrackLocation {
+import org.apache.tika.Tika
+import org.apache.tika.metadata.Metadata
+import org.apache.tika.parser.ParseContext
+import org.apache.tika.parser.mp3.Mp3Parser
+import org.junit.Test
+import org.xml.sax.helpers.DefaultHandler
 
-    private final int albumId;
-    private final int trackId;
+public class GetTrackLocationIntegrationTest {
 
-    public TrackLocation(int albumId, int trackId) {
-        this.albumId = albumId;
-        this.trackId = trackId;
-    }
+    @Test
+    void getDownloadTrackFromLocation() {
+        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
+        def trackLocation = new TrackLocation(4766, 57703)
 
-    public int getAlbumId() {
-        return albumId;
-    }
+        musicLibrary.fetchInputStream(trackLocation).withCloseable { is ->
+            assert new Tika().detect(is) == "audio/mpeg"
 
-    public int getTrackId() {
-        return trackId;
-    }
+            new Metadata().with { metadata ->
+                new Mp3Parser().parse(is, new DefaultHandler(), metadata, new ParseContext())
+                assert metadata['channels'] == '2'
+                assert metadata['samplerate'] == '44100'
+                assert metadata['version'] == 'MPEG 3 Layer III Version 1'
+            }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof TrackLocation)) {
-            return false;
         }
-        TrackLocation other = (TrackLocation) obj;
-        return albumId == other.albumId && trackId == other.trackId;
     }
 
-    @Override
-    public String toString() {
-        return albumId + ":" + trackId;
-    }
 }

@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest.musiclibrary;
 
-public class InvalidTrackLocationException extends RuntimeException {
+import java.util.List;
 
-    public InvalidTrackLocationException(String message) {
-        super(message);
-    }
+public interface MusicGuesser {
+
+    List<String> suggest(String part);
 
 }

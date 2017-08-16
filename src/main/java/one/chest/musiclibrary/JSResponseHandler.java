@@ -21,37 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest;
+package one.chest.musiclibrary;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import jdk.nashorn.api.scripting.ScriptUtils;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-final class TrackExtractor {
+class JSResponseHandler {
 
-    private final String artist;
+    private ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
-    TrackExtractor(String artist) {
-        this.artist = artist;
+    JSResponseHandler() {
+        BiFunction<ScriptObjectMirror, ScriptObjectMirror, Object[]> consumer;
+        consumer = (arr, junk) -> (Object[]) ScriptUtils.convert(arr.getSlot(1), Object[].class);
+        engine.put("suggest", consumer);
     }
 
-    List<Track> fromJSON(JSONObject tracks) {
-        JSONArray items = tracks.getJSONArray("items");
-        return StreamSupport.stream(items.spliterator(), false)
-                .map(o -> (JSONObject) o)
-                .filter(this::filterByArtistName)
-                .filter(i -> i.getJSONArray("albums").length() > 0)
-                .map(i -> Track.fromJson(artist, i))
-                .collect(Collectors.toList());
+    List<String> parseSuggestionToList(String js) {
+        try {
+            Object[] scriptResponse = (Object[]) engine.eval(js);
+
+            return Arrays.stream(scriptResponse)
+                    .filter(Objects::nonNull)
+                    .map(String::valueOf)
+                    .collect(Collectors.toList());
+
+        } catch (ScriptException | ClassCastException e) {
+            throw new MusicLibraryInternalException("Can't handle js: " + js, e);
+        }
     }
 
-    boolean filterByArtistName(JSONObject jsonObject) {
-        JSONArray artists = jsonObject.getJSONArray("artists");
-        return StreamSupport.stream(artists.spliterator(), false)
-                .anyMatch(a -> artist.equals(((JSONObject) a).getString("name")));
-    }
 }

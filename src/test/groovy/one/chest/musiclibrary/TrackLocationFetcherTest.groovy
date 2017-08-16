@@ -21,33 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package one.chest
+package one.chest.musiclibrary
 
-import org.apache.tika.Tika
-import org.apache.tika.metadata.Metadata
-import org.apache.tika.parser.ParseContext
-import org.apache.tika.parser.mp3.Mp3Parser
 import org.junit.Test
-import org.xml.sax.helpers.DefaultHandler
 
-public class GetTrackLocationIntegrationTest {
+public class TrackLocationFetcherTest {
 
     @Test
-    void getDownloadTrackFromLocation() {
-        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
-        def trackLocation = new TrackLocation(4766, 57703)
-
-        musicLibrary.fetchInputStream(trackLocation).withCloseable { is ->
-            assert new Tika().detect(is) == "audio/mpeg"
-
-            new Metadata().with { metadata ->
-                new Mp3Parser().parse(is, new DefaultHandler(), metadata, new ParseContext())
-                assert metadata['channels'] == '2'
-                assert metadata['samplerate'] == '44100'
-                assert metadata['version'] == 'MPEG 3 Layer III Version 1'
-            }
-
-        }
+    public void createTrackLocation() {
+        def fetcher = new TrackLocationFetcher();
+        assert fetcher.createTrackURI(
+                57703,
+                "s131f.storage.library.net",
+                "/music/34/3/data-0.14:44307316719:7952090",
+                "000556ce28f05a33",
+                "0f622ee89ed744f3c31828c6d6f8f357f7582e5c7024fa332166085a9313a361"
+        ) == "https://s131f.storage.library.net/get-mp3/9eff23a9ae8aedc1e5e4b55080e3df1e/000556ce28f05a33/music/34/3/data-0.14:44307316719:7952090?track-id=57703"
     }
-
 }
