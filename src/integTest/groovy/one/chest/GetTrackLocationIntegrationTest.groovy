@@ -24,7 +24,11 @@
 package one.chest
 
 import org.apache.tika.Tika
+import org.apache.tika.metadata.Metadata
+import org.apache.tika.parser.ParseContext
+import org.apache.tika.parser.mp3.Mp3Parser
 import org.junit.Test
+import org.xml.sax.helpers.DefaultHandler
 
 public class GetTrackLocationIntegrationTest {
 
@@ -33,8 +37,17 @@ public class GetTrackLocationIntegrationTest {
         def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
         def trackLocation = new TrackLocation(4766, 57703)
 
-        musicLibrary.fetchInputStream(trackLocation).withCloseable {
-            assert new Tika().detect(it) == "audio/mpeg"
+        musicLibrary.fetchInputStream(trackLocation).withCloseable { is ->
+            assert new Tika().detect(is) == "audio/mpeg"
+
+            new Metadata().with { metadata ->
+                new Mp3Parser().parse(is, new DefaultHandler(), metadata, new ParseContext())
+                assert metadata['channels'] == '2'
+                assert metadata['samplerate'] == '44100'
+                assert metadata['version'] == 'MPEG 3 Layer III Version 1'
+            }
+
         }
     }
+
 }

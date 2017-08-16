@@ -28,6 +28,7 @@ dependencies {
 
     testCompileOnly 'com.intellij:annotations:12.0'
     testCompile 'org.apache.tika:tika-core:1.16'
+    testCompile 'org.apache.tika:tika-parsers:1.5'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.7'
     testCompile 'junit:junit:4.12'
 
