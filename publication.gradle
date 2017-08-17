@@ -49,9 +49,9 @@ def configureDeployment() {
                     url 'https://chest.one'
 
                     scm {
-                        url 'https://github.com/DNAlchemist/ratpack-form-parser'
-                        connection 'scm:git:git://github.com/DNAlchemist/ratpack-form-parser.git'
-                        developerConnection 'scm:git:git://github.com/DNAlchemist/ratpack-form-parser.git'
+                        url 'https://github.com/DNAlchemist/music-library'
+                        connection 'scm:git:git://github.com/DNAlchemist/music-library.git'
+                        developerConnection 'scm:git:git://github.com/DNAlchemist/music-library.git'
                     }
 
                     licenses {
