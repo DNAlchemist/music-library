@@ -41,9 +41,12 @@ class JSResponseHandler {
     private ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
 
     JSResponseHandler() {
-        BiFunction<ScriptObjectMirror, ScriptObjectMirror, Object[]> consumer;
-        consumer = (arr, junk) -> (Object[]) ScriptUtils.convert(arr.getSlot(1), Object[].class);
+        BiFunction<ScriptObjectMirror, ScriptObjectMirror, Object[]> consumer = JSResponseHandler::suggest;
         engine.put("suggest", consumer);
+    }
+
+    private static Object[] suggest(ScriptObjectMirror arr, ScriptObjectMirror junk) {
+        return (Object[]) ScriptUtils.convert(arr.getSlot(1), Object[].class);
     }
 
     List<String> parseSuggestionToList(String js) {
