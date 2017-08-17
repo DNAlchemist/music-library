@@ -16,6 +16,11 @@ if(hasCredentials) {
 @SuppressWarnings(["GroovyAssignabilityCheck", "GrUnresolvedAccess"])
 def configureDeployment() {
 
+    signing {
+        if(isSignatoryConfigured())
+            sign configurations.archives
+    }
+
     publishing {
         publications {
             mavenJava(MavenPublication) {
@@ -27,6 +32,12 @@ def configureDeployment() {
     uploadArchives {
         repositories {
             mavenDeployer {
+                beforeDeployment {
+                    if (isSignatoryConfigured()) {
+                        signing.signPom(it)
+                    }
+                }
+
                 repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
                     authentication(userName: ossrhUsername, password: ossrhPassword)
                 }
