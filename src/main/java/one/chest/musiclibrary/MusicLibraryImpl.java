@@ -29,7 +29,7 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import one.chest.musiclibrary.exception.InvalidTrackLocationException;
-import one.chest.musiclibrary.exception.MusicLibraryInternalException;
+import one.chest.musiclibrary.exception.MusicLibraryException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -62,7 +62,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
             JSONObject tracks = response.getBody().getObject().getJSONObject("tracks");
             return new TrackExtractor(artist).fromJSON(tracks);
         } catch (UnirestException e) {
-            throw new MusicLibraryInternalException("Error while search track", e);
+            throw new MusicLibraryException("Error while search track", e);
         }
     }
 
@@ -101,7 +101,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     .getBody();
 
         } catch (UnirestException e) {
-            throw new MusicLibraryInternalException("Error while building track download URI", e);
+            throw new MusicLibraryException("Error while building track download URI", e);
         }
     }
 

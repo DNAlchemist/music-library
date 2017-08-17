@@ -23,9 +23,9 @@
  */
 package one.chest.musiclibrary.exception;
 
-public class MusicLibraryInternalException extends RuntimeException {
+public class MusicLibraryException extends RuntimeException {
 
-    public MusicLibraryInternalException(String message, Throwable cause) {
+    public MusicLibraryException(String message, Throwable cause) {
         super(message, cause);
     }
 

@@ -23,7 +23,7 @@
  */
 package one.chest.musiclibrary
 
-import one.chest.musiclibrary.exception.MusicLibraryInternalException
+import one.chest.musiclibrary.exception.MusicLibraryException
 import org.intellij.lang.annotations.Language
 import org.junit.Test
 
@@ -76,7 +76,7 @@ public class JSResponseHandlerTest {
         assert jsHandler.parseSuggestionToList(js) == []
     }
 
-    @Test(expected = MusicLibraryInternalException)
+    @Test(expected = MusicLibraryException)
     public void illegalArgumentListSize() {
         def jsHandler = new JSResponseHandler()
 
@@ -86,7 +86,7 @@ public class JSResponseHandlerTest {
         jsHandler.parseSuggestionToList(js)
     }
 
-    @Test(expected = MusicLibraryInternalException)
+    @Test(expected = MusicLibraryException)
     public void missingSuggestionArgument() {
         def jsHandler = new JSResponseHandler()
 

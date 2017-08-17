@@ -23,7 +23,7 @@
  */
 package one.chest.musiclibrary;
 
-import one.chest.musiclibrary.exception.MusicLibraryInternalException;
+import one.chest.musiclibrary.exception.MusicLibraryException;
 
 import javax.xml.bind.annotation.adapters.HexBinaryAdapter;
 import java.io.UnsupportedEncodingException;
@@ -39,7 +39,7 @@ public class TrackLocationFetcher {
         try {
             this.signer = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            throw new MusicLibraryInternalException("Signer initialization error", e);
+            throw new MusicLibraryException("Signer initialization error", e);
         }
     }
 

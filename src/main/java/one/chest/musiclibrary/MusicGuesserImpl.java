@@ -26,7 +26,7 @@ package one.chest.musiclibrary;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import one.chest.musiclibrary.exception.MusicLibraryInternalException;
+import one.chest.musiclibrary.exception.MusicLibraryException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,7 +57,7 @@ public final class MusicGuesserImpl implements MusicGuesser {
                     .collect(Collectors.toList());
 
         } catch (UnirestException e) {
-            throw new MusicLibraryInternalException("Error while suggest track", e);
+            throw new MusicLibraryException("Error while suggest track", e);
         }
     }
 

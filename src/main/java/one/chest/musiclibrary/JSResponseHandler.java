@@ -25,7 +25,7 @@ package one.chest.musiclibrary;
 
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import jdk.nashorn.api.scripting.ScriptUtils;
-import one.chest.musiclibrary.exception.MusicLibraryInternalException;
+import one.chest.musiclibrary.exception.MusicLibraryException;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -59,7 +59,7 @@ class JSResponseHandler {
                     .collect(Collectors.toList());
 
         } catch (ScriptException | ClassCastException e) {
-            throw new MusicLibraryInternalException("Can't handle js: " + js, e);
+            throw new MusicLibraryException("Can't handle js: " + js, e);
         }
     }
 
