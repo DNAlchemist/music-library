@@ -23,7 +23,7 @@
  */
 package one.chest.musiclibrary.exception;
 
-public class InvalidTrackLocationException extends RuntimeException {
+public class InvalidTrackLocationException extends MusicLibraryException {
 
     public InvalidTrackLocationException(String message) {
         super(message);

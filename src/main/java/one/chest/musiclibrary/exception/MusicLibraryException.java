@@ -29,4 +29,8 @@ public class MusicLibraryException extends RuntimeException {
         super(message, cause);
     }
 
+    public MusicLibraryException(String message) {
+        super(message);
+    }
+
 }
