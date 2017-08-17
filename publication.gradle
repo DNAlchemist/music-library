@@ -1,15 +1,24 @@
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+project.ext.isSignatoryConfigured = {
+    if (project.hasProperty('signing.keyId') && project.hasProperty('signing.password') && project.hasProperty('signing.secretKeyRingFile'))
+        return true
+    else
+        logger.warn("No signatory is available to sign")
+    return false
+}.memoize()
 
 def hasCredentials = hasProperty('ossrhUsername') && hasProperty('ossrhPassword');
 
 uploadArchives.doFirst {
-    if(!hasCredentials) {
+    if (!hasCredentials) {
         throw new InvalidUserDataException('Missing properties "ossrhUsername" and "ossrhPassword"')
     }
 }
 
-if(hasCredentials) {
+if (hasCredentials) {
     configureDeployment()
 }
 
@@ -17,7 +26,7 @@ if(hasCredentials) {
 def configureDeployment() {
 
     signing {
-        if(isSignatoryConfigured())
+        if (isSignatoryConfigured())
             sign configurations.archives
     }
 
