@@ -45,7 +45,7 @@ final class TrackExtractor {
                 .map(o -> (JSONObject) o)
                 .filter(this::filterByArtistName)
                 .filter(i -> i.getJSONArray("albums").length() > 0)
-                .map(i -> Track.fromJson(artist, i))
+                .map(i -> TrackImpl.fromJson(artist, i))
                 .collect(Collectors.toList());
     }
 

@@ -30,6 +30,8 @@ public interface MusicLibrary {
 
     List<Track> searchTracks(String artist, String song);
 
+    InputStream fetchInputStream(Track track);
+
     InputStream fetchInputStream(TrackLocation trackLocation);
 
 }

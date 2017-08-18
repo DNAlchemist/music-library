@@ -23,46 +23,12 @@
  */
 package one.chest.musiclibrary;
 
-import org.json.JSONObject;
+public interface Track {
 
-import java.util.Objects;
+    TrackLocation getTrackLocation();
 
-public class Track {
+    String getArtist();
 
-    private final TrackLocation trackLocation;
-    private final String artist;
-    private final String name;
+    String getName();
 
-    Track(TrackLocation trackLocation, String artist, String song) {
-        this.trackLocation = Objects.requireNonNull(trackLocation);
-        this.artist = Objects.requireNonNull(artist);
-        this.name = Objects.requireNonNull(song);
-    }
-
-    public static Track fromJson(String artist, JSONObject i) {
-        int albumId = ((JSONObject) i.getJSONArray("albums").get(0)).getInt("id");
-        int trackId = i.getInt("id");
-        TrackLocation trackLocation = new TrackLocation(albumId, trackId);
-        return new Track(trackLocation, artist, i.getString("title"));
-    }
-
-    public TrackLocation getTrackLocation() {
-        return trackLocation;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Track)) {
-            return false;
-        }
-        Track other = (Track) obj;
-        return ((artist != null && artist.equals(other.artist)) || other.artist == null) &&
-                ((name != null && name.equals(other.name)) || other.name == null) &&
-                (trackLocation != null && trackLocation.equals(other.trackLocation) || other.trackLocation == null);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[%s]%s - %s", trackLocation, artist, name);
-    }
 }

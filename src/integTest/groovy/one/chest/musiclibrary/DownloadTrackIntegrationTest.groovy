@@ -30,7 +30,7 @@ import org.apache.tika.parser.mp3.Mp3Parser
 import org.junit.Test
 import org.xml.sax.helpers.DefaultHandler
 
-public class GetTrackLocationIntegrationTest {
+public class DownloadTrackIntegrationTest {
 
     @Test
     void getDownloadTrackFromLocation() {

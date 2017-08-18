@@ -67,6 +67,11 @@ public final class MusicLibraryImpl implements MusicLibrary {
     }
 
     @Override
+    public InputStream fetchInputStream(Track track) {
+        return fetchInputStream(track.getTrackLocation());
+    }
+
+    @Override
     public InputStream fetchInputStream(TrackLocation trackLocation) {
         try {
             GetRequest request = Unirest.get(host.concat("/api/v2.1/handlers/track/{trackId}:{albumId}/web-feed-promotion-playlist-saved/download/m?hq=0"))
