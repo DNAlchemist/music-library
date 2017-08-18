@@ -31,10 +31,9 @@ public class SearchTrackIntegrationTest {
     void searchTrack() {
         def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
         List<Track> trackList = musicLibrary.searchTracks("Ozzy Osbourne", "Crazy Train")
-        assert trackList == [
-                new TrackImpl(new TrackLocation(67172, 628177), "Ozzy Osbourne", "Crazy Train"),
-                new TrackImpl(new TrackLocation(1805031, 16491927), "Ozzy Osbourne", "Crazy Train")
-        ]
+        assert trackList.contains(
+                new TrackImpl(new TrackLocation(67172, 628177), "Ozzy Osbourne", "Crazy Train")
+        )
     }
 
 }
