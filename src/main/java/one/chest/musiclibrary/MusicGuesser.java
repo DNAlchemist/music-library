@@ -29,4 +29,7 @@ public interface MusicGuesser {
 
     List<String> suggest(String part);
 
+    static MusicGuesserImpl createDefaultGuesser(String host) {
+        return new MusicGuesserImpl(host);
+    }
 }

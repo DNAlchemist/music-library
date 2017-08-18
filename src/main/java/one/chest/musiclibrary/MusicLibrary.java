@@ -34,4 +34,8 @@ public interface MusicLibrary {
 
     InputStream fetchInputStream(TrackLocation trackLocation);
 
+    public static MusicLibrary createDefaultLibrary(String host) {
+        return new MusicLibraryImpl(host);
+    }
+
 }
