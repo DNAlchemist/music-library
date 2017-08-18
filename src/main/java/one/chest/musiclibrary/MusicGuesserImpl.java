@@ -41,7 +41,32 @@ public final class MusicGuesserImpl implements MusicGuesser {
     }
 
     static String formatSong(String s) {
-        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        return capitalize(s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase());
+    }
+
+    static String capitalize(String text) {
+        StringBuilder sb = new StringBuilder();
+        boolean toCapital = false;
+        for(char c : text.toCharArray()) {
+            if(c == '-') {
+                toCapital = false;
+            }
+            if(c == '.' || c == '!' || c == '?') {
+                toCapital = true;
+                sb.append(c);
+                continue;
+            }
+            if(toCapital) {
+                char cUpperCaseCharacter = Character.toUpperCase(c);
+                if(cUpperCaseCharacter != c) {
+                    toCapital = false;
+                    sb.append(cUpperCaseCharacter);
+                    continue;
+                }
+            }
+            sb.append(c);
+        }
+        return sb.toString();
     }
 
     @Override

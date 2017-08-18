@@ -51,7 +51,7 @@ class SuggestionIntegrationTest {
     void testGuess() {
         MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
         def searchResult = lib.suggest("REM its the")
-        assert searchResult == ['R.e.m. - its the end of the world as we know it and i feel fine']
+        assert searchResult == ['R.E.M. - its the end of the world as we know it and i feel fine']
     }
 
 }

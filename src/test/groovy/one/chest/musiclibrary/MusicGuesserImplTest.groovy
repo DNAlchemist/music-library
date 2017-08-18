@@ -45,4 +45,10 @@ class MusicGuesserImplTest {
         assert result == "W"
     }
 
+
+    @Test
+    void capitalize() {
+        def result = MusicGuesserImpl.capitalize("Hello, world! how you doin'?")
+        assert result == "Hello, world! How you doin'?"
+    }
 }
