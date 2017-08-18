@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -64,6 +65,12 @@ public final class MusicLibraryImpl implements MusicLibrary {
         } catch (UnirestException e) {
             throw new MusicLibraryException("Error while search track", e);
         }
+    }
+
+    @Override
+    public Optional<Track> searchTrack(String artist, String song) {
+        List<Track> tracks = searchTracks(artist, song);
+        return tracks.size() > 0 ? Optional.of(tracks.get(0)) : Optional.empty();
     }
 
     @Override

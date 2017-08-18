@@ -25,10 +25,13 @@ package one.chest.musiclibrary;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 public interface MusicLibrary {
 
     List<Track> searchTracks(String artist, String song);
+
+    Optional<Track> searchTrack(String artist, String song);
 
     InputStream fetchInputStream(Track track);
 
