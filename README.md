@@ -32,5 +32,5 @@ Java library for music downloads
 [coveralls-image]: https://coveralls.io/repos/github/DNAlchemist/music-library/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/DNAlchemist/music-library?branch=master
 
-[license-url]: https://github.com/Mashape/unirest-java/blob/master/LICENSE
+[license-url]: https://github.com/DNAlchemist/music-library/blob/master/LICENSE
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat
