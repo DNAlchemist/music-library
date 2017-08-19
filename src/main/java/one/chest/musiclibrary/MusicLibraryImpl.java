@@ -84,6 +84,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
             GetRequest request = Unirest.get(host.concat("/api/v2.1/handlers/track/{trackId}:{albumId}/web-feed-promotion-playlist-saved/download/m?hq=0"))
                     .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
                     .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
+                    .header("Accept-Language", "ru")
                     .header("Cookie", "uuid=" + uuid)
                     .header("X-Retpath-Y", "https://music.yandex.ru/");
 
