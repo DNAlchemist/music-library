@@ -38,4 +38,12 @@ public class SearchTrackIntegrationTest {
         )
     }
 
+    @Test
+    void getTrack() {
+        def musicLibrary = new MusicLibraryImpl('https://music.yandex.ru');
+        Track track = musicLibrary.getTrack(new TrackLocation(67172, 628177));
+        assert track.name == "Crazy Train"
+        assert track.artist == "Ozzy Osbourne"
+        assert track.duration == 289560
+    }
 }

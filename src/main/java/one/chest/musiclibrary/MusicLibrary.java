@@ -37,6 +37,8 @@ public interface MusicLibrary {
 
     Optional<Track> searchTrack(String artist, String song);
 
+    Track getTrack(TrackLocation trackLocation);
+
     InputStream fetchInputStream(Track track);
 
     InputStream fetchInputStream(TrackLocation trackLocation);

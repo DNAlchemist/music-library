@@ -34,6 +34,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -86,6 +87,27 @@ public final class MusicLibraryImpl implements MusicLibrary {
     public Optional<Track> searchTrack(String artist, String song) {
         List<Track> tracks = searchTracks(artist, song);
         return tracks.size() > 0 ? Optional.of(tracks.get(0)) : Optional.empty();
+    }
+
+    @Override
+    public Track getTrack(TrackLocation trackLocation) {
+        try {
+            HttpResponse<JsonNode> response = Unirest.get(host.concat("/handlers/track.jsx?track={trackId}:{albumId}"))
+                    .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
+                    .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
+                    .header("Accept-Language", "ru")
+                    .header("X-Retpath-Y", host)
+                    .asJson();
+            JSONObject track = response.getBody().getObject().getJSONObject("track");
+            JSONArray artistNode = track.getJSONArray("artists");
+            assert artistNode.length() == 1;
+            String artistName = ((JSONObject) artistNode.get(0)).getString("name");
+            return TrackImpl.fromJson(artistName, track);
+
+        } catch (UnirestException e) {
+            throw new MusicLibraryException("Error while fetching track metadata", e);
+        }
+//        return null;
     }
 
     @Override
