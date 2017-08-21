@@ -2,6 +2,7 @@
   <profile version="1.0">
     <option name="myName" value="library" />
     <inspection_tool class="GrUnnecessaryPublicModifier" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="SameParameterValue" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="WeakerAccess" enabled="true" level="WARNING" enabled_by_default="false">
       <scope name="Tests" level="WARNING" enabled="true">
         <option name="SUGGEST_PACKAGE_LOCAL_FOR_MEMBERS" value="true" />
