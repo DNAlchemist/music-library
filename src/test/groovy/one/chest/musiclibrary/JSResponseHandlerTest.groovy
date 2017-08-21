@@ -23,10 +23,12 @@
  */
 package one.chest.musiclibrary
 
+import groovy.transform.CompileStatic
 import one.chest.musiclibrary.exception.MusicLibraryException
 import org.intellij.lang.annotations.Language
 import org.junit.Test
 
+@CompileStatic
 public class JSResponseHandlerTest {
 
     @Test

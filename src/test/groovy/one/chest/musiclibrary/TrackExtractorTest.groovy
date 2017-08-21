@@ -24,9 +24,11 @@
 package one.chest.musiclibrary
 
 import groovy.json.JsonSlurper
+import groovy.transform.CompileStatic
 import org.json.JSONObject
 import org.junit.Test
 
+@CompileStatic
 public class TrackExtractorTest {
 
     @Test

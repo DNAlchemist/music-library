@@ -23,6 +23,7 @@
  */
 package one.chest.musiclibrary
 
+import groovy.transform.CompileStatic
 import org.apache.tika.Tika
 import org.apache.tika.metadata.Metadata
 import org.apache.tika.parser.ParseContext
@@ -30,6 +31,7 @@ import org.apache.tika.parser.mp3.Mp3Parser
 import org.junit.Test
 import org.xml.sax.helpers.DefaultHandler
 
+@CompileStatic
 public class DownloadTrackIntegrationTest {
 
     @Test
