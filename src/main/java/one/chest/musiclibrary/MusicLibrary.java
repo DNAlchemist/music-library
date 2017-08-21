@@ -29,6 +29,10 @@ import java.util.Optional;
 
 public interface MusicLibrary {
 
+    public static MusicLibrary createDefaultLibrary(String host) {
+        return new MusicLibraryImpl(host);
+    }
+
     List<Track> searchTracks(String artist, String song);
 
     Optional<Track> searchTrack(String artist, String song);
@@ -36,9 +40,5 @@ public interface MusicLibrary {
     InputStream fetchInputStream(Track track);
 
     InputStream fetchInputStream(TrackLocation trackLocation);
-
-    public static MusicLibrary createDefaultLibrary(String host) {
-        return new MusicLibraryImpl(host);
-    }
 
 }

@@ -30,6 +30,10 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import com.mashape.unirest.request.GetRequest;
 import one.chest.musiclibrary.exception.InvalidTrackLocationException;
 import one.chest.musiclibrary.exception.MusicLibraryException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -42,11 +46,23 @@ public final class MusicLibraryImpl implements MusicLibrary {
 
     private final String host;
     private final TrackLocationFetcher trackLocationFetcher;
-    private final String uuid = UUID.randomUUID().toString();
+    private final BasicCookieStore cookieStore = new BasicCookieStore();
 
     MusicLibraryImpl(String libraryHost) {
         this.host = libraryHost;
         this.trackLocationFetcher = new TrackLocationFetcher();
+        Unirest.setHttpClient(createHttpClient());
+        addCookie("UUID", UUID.randomUUID().toString());
+    }
+
+    private HttpClient createHttpClient() {
+        return HttpClients.custom().setDefaultCookieStore(cookieStore).build();
+    }
+
+    private void addCookie(String name, String value) {
+        BasicClientCookie cookie = new BasicClientCookie(name, value);
+        cookie.setDomain(host);
+        cookieStore.addCookie(cookie);
     }
 
     @Override
@@ -57,7 +73,6 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     .queryString("type", "track")
                     .queryString("nocookiesupport", "true")
                     .header("Accept-Language", "ru")
-                    .header("Cookie", "uuid=" + uuid)
                     .header("X-Retpath-Y", "https://music.yandex.ru/")
                     .asJson();
             JSONObject tracks = response.getBody().getObject().getJSONObject("tracks");
@@ -85,7 +100,6 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
                     .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
                     .header("Accept-Language", "ru")
-                    .header("Cookie", "uuid=" + uuid)
                     .header("X-Retpath-Y", "https://music.yandex.ru/");
 
             HttpResponse<JsonNode> response = request.asJson();
@@ -108,7 +122,6 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     json.getString("s"));
 
             return Unirest.get(location)
-                    .header("Cookie", UUID.randomUUID().toString())
                     .header("X-Retpath-Y", "https://music.yandex.ru/")
                     .asBinary()
                     .getBody();
