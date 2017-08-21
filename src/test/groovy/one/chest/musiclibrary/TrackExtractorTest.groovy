@@ -50,7 +50,7 @@ public class TrackExtractorTest {
         def trackExtractor = new TrackExtractor("Kasabian")
         def tracks = new JsonSlurper().parseText(getClass().classLoader.getResource("tracks.json").text) as JSONObject
         assert trackExtractor.fromJSON(tracks) == [
-                new TrackImpl(new TrackLocation(70149, 651152), "Kasabian", "Underdog")
+                new TrackImpl(new TrackLocation(70149, 651152), "Kasabian", "Underdog", 277520L)
         ]
     }
 }

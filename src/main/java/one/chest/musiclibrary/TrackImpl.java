@@ -33,18 +33,20 @@ class TrackImpl implements Track {
 
     private final String artist;
     private final String name;
+    private final Long duration;
 
-    TrackImpl(TrackLocation trackLocation, String artist, String song) {
+    TrackImpl(TrackLocation trackLocation, String artist, String song, Long duration) {
         this.trackLocation = Objects.requireNonNull(trackLocation);
         this.artist = Objects.requireNonNull(artist);
         this.name = Objects.requireNonNull(song);
+        this.duration = duration;
     }
 
     public static Track fromJson(String artist, JSONObject i) {
         int albumId = ((JSONObject) i.getJSONArray("albums").get(0)).getInt("id");
         int trackId = i.getInt("id");
         TrackLocation trackLocation = new TrackLocation(albumId, trackId);
-        return new TrackImpl(trackLocation, artist, i.getString("title"));
+        return new TrackImpl(trackLocation, artist, i.getString("title"), i.getLong("durationMs"));
     }
 
     @Override
@@ -63,6 +65,11 @@ class TrackImpl implements Track {
     }
 
     @Override
+    public Long getDuration() {
+        return duration;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof TrackImpl)) {
             return false;
@@ -70,11 +77,12 @@ class TrackImpl implements Track {
         TrackImpl other = (TrackImpl) obj;
         return ((artist != null && artist.equals(other.getArtist())) || other.artist == null) &&
                 ((name != null && name.equals(other.getName())) || other.name == null) &&
+                ((duration != null && duration.equals(other.getDuration())) || other.duration == null) &&
                 (trackLocation != null && trackLocation.equals(other.trackLocation) || other.trackLocation == null);
     }
 
     @Override
     public String toString() {
-        return String.format("[%s]%s - %s", trackLocation, artist, name);
+        return String.format("[%s]%s - %s (%sms)", trackLocation, artist, name, duration);
     }
 }
