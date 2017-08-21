@@ -47,18 +47,18 @@ public final class MusicGuesserImpl implements MusicGuesser {
     static String capitalize(String text) {
         StringBuilder sb = new StringBuilder();
         boolean toCapital = false;
-        for(char c : text.toCharArray()) {
-            if(c == '-') {
+        for (char c : text.toCharArray()) {
+            if (c == '-') {
                 toCapital = false;
             }
-            if(c == '.' || c == '!' || c == '?') {
+            if (c == '.' || c == '!' || c == '?') {
                 toCapital = true;
                 sb.append(c);
                 continue;
             }
-            if(toCapital) {
+            if (toCapital) {
                 char cUpperCaseCharacter = Character.toUpperCase(c);
-                if(cUpperCaseCharacter != c) {
+                if (cUpperCaseCharacter != c) {
                     toCapital = false;
                     sb.append(cUpperCaseCharacter);
                     continue;

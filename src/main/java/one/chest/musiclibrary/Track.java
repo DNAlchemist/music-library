@@ -32,5 +32,5 @@ public interface Track {
     String getName();
 
     Long getDuration();
-    
+
 }
