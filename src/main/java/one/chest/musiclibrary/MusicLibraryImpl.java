@@ -74,7 +74,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     .queryString("type", "track")
                     .queryString("nocookiesupport", "true")
                     .header("Accept-Language", "ru")
-                    .header("X-Retpath-Y", "https://music.yandex.ru/")
+                    .header("X-Retpath-Y", host)
                     .asJson();
             JSONObject tracks = response.getBody().getObject().getJSONObject("tracks");
             return new TrackExtractor(artist).fromJSON(tracks);
@@ -122,7 +122,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
                     .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
                     .header("Accept-Language", "ru")
-                    .header("X-Retpath-Y", "https://music.yandex.ru/");
+                    .header("X-Retpath-Y", host);
 
             HttpResponse<JsonNode> response = request.asJson();
             if (response.getStatus() == 403) {
@@ -144,7 +144,7 @@ public final class MusicLibraryImpl implements MusicLibrary {
                     json.getString("s"));
 
             return Unirest.get(location)
-                    .header("X-Retpath-Y", "https://music.yandex.ru/")
+                    .header("X-Retpath-Y", host)
                     .asBinary()
                     .getBody();
 
