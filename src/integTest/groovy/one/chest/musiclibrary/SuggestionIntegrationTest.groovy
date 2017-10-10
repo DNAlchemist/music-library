@@ -32,18 +32,16 @@ class SuggestionIntegrationTest {
     @Test
     void testSuggestStartsWith() {
         MusicGuesser lib = new MusicGuesserImpl('https://suggest-music.yandex.ru')
-        def searchResult = lib.suggest("Robert Johnson")
+        List<String> searchResult = lib.suggest("The Marvelettes")
         assert searchResult.sort() == [
-                'Robert johnson',
-                'Robert johnson - come on in my kitchen',
-                'Robert johnson - cross road blues',
-                'Robert johnson - crossroad blues',
-                'Robert johnson - from four until late',
-                'Robert johnson - little queen of spades',
-                'Robert johnson - love in vain',
-                'Robert johnson - me and the devil blues',
-                'Robert johnson - sweet home chicago',
-                'Robert johnson - the complete recordings'
+                'The marvelettes',
+                'The marvelettes - forever more: the complete motown albums vol. 2',
+                'The marvelettes - forever: the complete motown albums, volume 1',
+                'The marvelettes - playboy', 'The marvelettes - please mr postman',
+                'The marvelettes - please mr. Postman', 'The marvelettes - the definitive collection',
+                'The marvelettes - the marvelettes',
+                'The marvelettes - ultimate top hits',
+                'The marvelettes: лучшее'
         ]
     }
 
