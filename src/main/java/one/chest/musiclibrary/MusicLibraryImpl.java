@@ -140,6 +140,10 @@ public final class MusicLibraryImpl implements MusicLibrary {
             throw new InvalidTrackLocationException("Invalid location: " + request.getUrl());
         }
 
+        if( response.getStatus() != 200) {
+            throw new MusicLibraryException("Invalid response status: " + response.getStatus() + ". Reason: " + response.getStatusText());
+        }
+
         String locationHolderURL = response.getBody().getObject().getString("src");
         JSONObject json = Unirest.get(locationHolderURL)
                 .queryString("format", "json")
