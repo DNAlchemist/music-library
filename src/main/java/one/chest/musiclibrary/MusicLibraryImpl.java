@@ -117,32 +117,8 @@ public final class MusicLibraryImpl implements MusicLibrary {
     @Override
     public InputStream fetchInputStream(TrackLocation trackLocation) {
         try {
-            GetRequest request = Unirest.get(host.concat("/api/v2.1/handlers/track/{trackId}:{albumId}/web-feed-promotion-playlist-saved/download/m?hq=0"))
-                    .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
-                    .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
-                    .header("Accept-Language", "ru")
-                    .header("X-Retpath-Y", host);
-
-            HttpResponse<JsonNode> response = request.asJson();
-            if (response.getStatus() == 403) {
-                throw new InvalidTrackLocationException("Invalid location: " + request.getUrl());
-            }
-
-            String locationHolderURL = response.getBody().getObject().getString("src");
-            JSONObject json = Unirest.get(locationHolderURL)
-                    .queryString("format", "json")
-                    .asJson()
-                    .getBody()
-                    .getObject();
-
-            String location = trackLocationFetcher.createTrackURI(
-                    trackLocation.getTrackId(),
-                    json.getString("host"),
-                    json.getString("path"),
-                    json.getString("ts"),
-                    json.getString("s"));
-
-            return Unirest.get(location)
+            String downloadLink = getDownloadLink(trackLocation);
+            return Unirest.get(downloadLink)
                     .header("X-Retpath-Y", host)
                     .asBinary()
                     .getBody();
@@ -150,6 +126,33 @@ public final class MusicLibraryImpl implements MusicLibrary {
         } catch (UnirestException e) {
             throw new MusicLibraryException("Error while building track download URI", e);
         }
+    }
+
+    public String getDownloadLink(TrackLocation trackLocation) throws UnirestException {
+        GetRequest request = Unirest.get(host.concat("/api/v2.1/handlers/track/{trackId}:{albumId}/web-feed-promotion-playlist-saved/download/m?hq=0"))
+                .routeParam("trackId", String.valueOf(trackLocation.getTrackId()))
+                .routeParam("albumId", String.valueOf(trackLocation.getAlbumId()))
+                .header("Accept-Language", "ru")
+                .header("X-Retpath-Y", host);
+
+        HttpResponse<JsonNode> response = request.asJson();
+        if (response.getStatus() == 403) {
+            throw new InvalidTrackLocationException("Invalid location: " + request.getUrl());
+        }
+
+        String locationHolderURL = response.getBody().getObject().getString("src");
+        JSONObject json = Unirest.get(locationHolderURL)
+                .queryString("format", "json")
+                .asJson()
+                .getBody()
+                .getObject();
+
+        return trackLocationFetcher.createTrackURI(
+                trackLocation.getTrackId(),
+                json.getString("host"),
+                json.getString("path"),
+                json.getString("ts"),
+                json.getString("s"));
     }
 
 }
