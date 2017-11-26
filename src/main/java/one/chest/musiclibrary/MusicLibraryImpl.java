@@ -107,7 +107,6 @@ public final class MusicLibraryImpl implements MusicLibrary {
         } catch (UnirestException e) {
             throw new MusicLibraryException("Error while fetching track metadata", e);
         }
-//        return null;
     }
 
     @Override

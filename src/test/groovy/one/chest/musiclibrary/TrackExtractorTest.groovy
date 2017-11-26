@@ -34,23 +34,28 @@ public class TrackExtractorTest {
     @Test
     public void fromJSON() {
         def trackExtractor = new TrackExtractor("Kasabian")
-        def track = new JsonSlurper().parseText(getClass().classLoader.getResource("track.json").text) as JSONObject
+        def track = parseJsonFromResources("track.json")
         assert trackExtractor.filterByArtistName(track)
     }
 
     @Test
     public void fromJSONInvalidArtist() {
         def trackExtractor = new TrackExtractor("Queen of the stone age")
-        def track = new JsonSlurper().parseText(getClass().classLoader.getResource("track.json").text) as JSONObject
+        def track = parseJsonFromResources("track.json")
         assert !trackExtractor.filterByArtistName(track)
     }
 
     @Test
     public void filterByArtistName() {
         def trackExtractor = new TrackExtractor("Kasabian")
-        def tracks = new JsonSlurper().parseText(getClass().classLoader.getResource("tracks.json").text) as JSONObject
+        def tracks = parseJsonFromResources("tracks.json")
         assert trackExtractor.fromJSON(tracks) == [
                 new TrackImpl(new TrackLocation(70149, 651152), "Kasabian", "Underdog", 277520L)
         ]
     }
+
+    private JSONObject parseJsonFromResources(String fileName) {
+        new JsonSlurper().parseText(getClass().classLoader.getResource(fileName).text) as JSONObject
+    }
+
 }

@@ -24,7 +24,7 @@
 package one.chest.musiclibrary
 
 import groovy.transform.CompileStatic
-import org.junit.Test;
+import org.junit.Test
 
 @CompileStatic
 class MusicGuesserImplTest {
